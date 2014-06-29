@@ -1,0 +1,17 @@
+{
+	"dependencies": {
+		"co": "^3.0.6",
+		"co-fs": "^1.2.0",
+		"co-foreach": "^1.0.6"
+	},
+
+	"devDependencies": {
+		"supervisor": "^0.6.0"
+	},
+
+	"scripts": {
+		"start-dev": "supervisor --harmony -n exit -n error -- app.js"
+	},
+
+	"private": true
+}
