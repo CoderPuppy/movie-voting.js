@@ -1,0 +1,3 @@
+#args option
+img(src = %option.img alt = %option.name)
+p %option.desc

@@ -1,0 +1,5 @@
+#for i, option in options
+	div#option-%i
+		#render './option'(option)
+		span.up-arrow
+		span.down-arrow

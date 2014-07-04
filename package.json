@@ -2,7 +2,14 @@
 	"dependencies": {
 		"co": "^3.0.6",
 		"co-fs": "^1.2.0",
-		"co-foreach": "^1.0.6"
+		"co-foreach": "^1.0.6",
+		"pull-stream": "^2.23.0",
+		"stream-to-pull-stream": "^1.4.1",
+		"pull-split": "^0.1.2",
+		"qs": "^0.6.6",
+		"inertia": "^0.0.7",
+		"debug": "^1.0.2",
+		"xtend": "^3.0.0"
 	},
 
 	"devDependencies": {
