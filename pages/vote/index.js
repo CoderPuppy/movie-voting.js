@@ -6,6 +6,9 @@ module.exports = function(data) { return function(req, res) {
 		case 'title':
 			res.write('Vote')
 			break
+		case 'head':
+			res.write('<script src=vote.js></script>\n')
+			break
 		case 'body':
 			
 			break

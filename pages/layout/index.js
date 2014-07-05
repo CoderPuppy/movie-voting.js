@@ -11,6 +11,8 @@ module.exports = function(page) { return function(req, res) {
 			res.write('<title>')
 			yield subRender('title')
 			res.write(' - Movie Voting</title>\n')
+			res.write('<script src=index.js></script>')
+			yield subRender('head')
 			res.write('<h1>')
 			yield subRender('title')
 			res.write(' - Movie Voting</h1>')

@@ -7,9 +7,12 @@
 		"stream-to-pull-stream": "^1.4.1",
 		"pull-split": "^0.1.2",
 		"qs": "^0.6.6",
-		"inertia": "^0.0.7",
+		"send": "^0.5.0",
 		"debug": "^1.0.2",
-		"xtend": "^3.0.0"
+		"xtend": "^3.0.0",
+		"browserify": "^4.2.0",
+		"watchify": "^0.10.2",
+		"domready": "^1.0.5"
 	},
 
 	"devDependencies": {

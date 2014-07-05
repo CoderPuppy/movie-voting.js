@@ -1,14 +1,16 @@
 const debug = require('./debug')
 const path  = require('path')
+const send  = require('send')
 
-const static = require('inertia').createHandler()
-
-static.encoding = 'utf-8'
-static.useCache = debug.enabled
-static.useCompression = debug.enabled
-
-static.addFileHandler('js')
-
-static.addDirHandler(path.join(__dirname, 'public'))
-
-module.exports = static
+module.exports = function(req, res, cb) {
+	const s = send(req, req.pURL.pathname, {
+		root: path.join(__dirname, 'public')
+	})
+	s.on('error', function(err) {
+		if(typeof(err) == 'object' && err !== null && err.status == 404)
+			cb()
+		else
+			throw err // TODO: error stuff
+	})
+	s.pipe(res)
+}
