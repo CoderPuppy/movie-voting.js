@@ -30,18 +30,18 @@ const server = http.createServer(function(req, res) {
 	pURL.query = query
 	req.pURL = pURL
 
-	static(req, res, function() {
-		if(pURL.pathname == '/movies.json') {
-			res.writeHead(200, { 'Content-Type': 'application/json' })
-			res.end(JSON.stringify(data))
-		} else if(pURL.pathname == '/' || pURL.pathname == '/vote') {
-			pages.draw(pages.layout(pages.vote(data)), res)
-		} else if(pURL.pathname == '/results') {
-			pages.draw(pages.layout(pages.results(data)), res)
-		} else {
+	if(pURL.pathname == '/movies.json') {
+		res.writeHead(200, { 'Content-Type': 'application/json' })
+		res.end(JSON.stringify(data))
+	} else if(pURL.pathname == '/' || pURL.pathname == '/vote') {
+		pages.draw(pages.layout(pages.vote(data)), res)
+	} else if(pURL.pathname == '/results') {
+		pages.draw(pages.layout(pages.results(data)), res)
+	} else {
+		static(req, res, function() {
 			pages.draw(pages.layout(pages.notfound(req.pURL.pathname)), res)
-		}
-	})
+		})
+	}
 })
 listen(server, 3000, '0.0.0.0')
 
@@ -62,7 +62,7 @@ const shoe = require('shoe')(function(conn) {
 			pull(push, ps)
 			break
 		case 'vote':
-			pull(ps, page.vote.stream(), ps)
+			pull(ps, pages.vote.stream(data), ps)
 			break
 		default:
 			debug.shoe('Unknown stream: %s', meta)

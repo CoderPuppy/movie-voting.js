@@ -4,6 +4,7 @@ const debug  = require('./debug').sub('data')
 const stps   = require('stream-to-pull-stream')
 const pull   = require('pull-stream')
 const path   = require('path')
+const util   = require('util')
 const EE     = require('events').EventEmitter
 const fs     = require('fs')
 
@@ -18,9 +19,16 @@ data.people = (function() {
 	const people = []
 	people.nextID = 0
 
+	for(var k in EE.prototype) {
+		people[k] = EE.prototype[k]
+	}
+	EE.call(people)
+
 	const Person = (function() {
 		function Person(name) {
 			if(!(this instanceof Person)) return new Person(name)
+
+			EE.call(this)
 
 			this.id = people.nextID++
 			people[this.id] = this
@@ -30,18 +38,42 @@ data.people = (function() {
 			debug.people('new person: %s (%d)', this.name, this.id)
 
 			this.update([])
-		}
 
-		(function() {
+			people.emit('new', this)
+		}
+		util.inherits(Person, EE)
+
+		;(function() {
+			this.rename = function(name) {
+				if(!name) throw new Error('Names must not be empty')
+
+				debug.people('renaming %s (%d) to %s', this.name, this.id, name)
+
+				const oldName = this.name
+				this.name = name
+				this.emit('rename', name, oldName)
+				people.emit('rename', this, name, oldName)
+
+				return this
+			}
+
 			this.update = function(vote) {
 				debug.people('updating %s (%d)\'s vote to: %j', this.name, this.id, vote)
+
+				const oldVote = this.vote
 				this.vote = vote
+				this.emit('update', vote, oldVote)
+				people.emit('update', this, vote, oldVote)
+
 				data.voting.update(this)()
+
 				return this
 			}
 
 			this.delete = function() {
 				people[id] = undefined
+				this.emit('delete')
+				people.emit('delete', this)
 				return this
 			}
 		}).call(Person.prototype)

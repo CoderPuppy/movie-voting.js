@@ -9,9 +9,9 @@
   z-index: 1;
   position: absolute;
   top: 10px;
-  left: 0.5em;
+  left: 1%;
   bottom: 20px;
-  width: 10em;
+  width: 20%;
   background: #ccc;
   border-radius: 5px 0 0 5px;
   border: 1px none #000;
@@ -27,6 +27,7 @@
   margin-right: 6px;
   margin-bottom: 3px;
   border-radius: 5px;
+  height: 20px;
   padding: 2px;
   padding-left: 12px;
   font-weight: bold;
@@ -38,9 +39,56 @@
 .vote .people .person .name {
   text-shadow: #000 2px 2px 5px;
 }
+.vote .people .person .edit {
+  position: absolute;
+  right: 20px;
+  color: #999;
+}
+.vote .people .person .edit:hover {
+  color: #333;
+}
+.vote .people .person .delete {
+  position: absolute;
+  right: 5px;
+  color: #999;
+}
+.vote .people .person .delete:hover {
+  color: #333;
+}
+.vote .people .person form {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 4px;
+  right: 22px;
+  bottom: 0;
+}
+.vote .people .person form .name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+.vote .people .person.editing .name {
+  display: none;
+}
+.vote .people .person.editing form {
+  display: inline;
+}
+.vote .people .person.editing form .name {
+  display: inline-block;
+}
+.vote .people .person.editing .edit {
+  display: none;
+}
 .vote .people .person.selected {
   border: 1px solid #333;
   background: #737373;
+}
+.vote .people .person.selected .name {
+  text-shadow: #fff 1px 1px 5px;
 }
 .vote .people .new {
   position: relative;
@@ -49,13 +97,16 @@
   margin-right: 6px;
   margin-bottom: 3px;
   border-radius: 5px;
+  height: 20px;
   color: #b3b3b3;
   text-align: center;
-  font-weight: bold;
-  font-size: 16pt;
 }
 .vote .people .new:hover {
   border: 1px solid #8c8c8c;
+}
+.vote .people .new .icon {
+  font-weight: bold;
+  font-size: 16pt;
 }
 .vote .people .new:hover {
   border: 1px solid #8c8c8c;
@@ -65,7 +116,7 @@
   z-index: 0;
   position: absolute;
   top: 0;
-  left: 10.5em;
+  left: 21%;
   right: 10px;
   bottom: 10px;
   border-radius: 5px;
@@ -87,9 +138,9 @@
   cursor: pointer;
   color: #404040;
   position: absolute;
-  font-size: 10pt;
+  font-size: control-font-size;
   top: 0px;
-  right: 7px;
+  right: 12px;
 }
 .vote .movies .movie .up:hover {
   color: #000;
@@ -98,8 +149,8 @@
   cursor: pointer;
   color: #404040;
   position: absolute;
-  font-size: 10pt;
-  right: 8px;
+  font-size: control-font-size;
+  right: 12px;
   bottom: 0px;
 }
 .vote .movies .movie .down:hover {
@@ -109,8 +160,9 @@
   cursor: pointer;
   color: #404040;
   position: absolute;
-  font-size: 10pt;
-  top: 5px;
+  font-size: control-font-size;
+  top: 50%;
+  margin-top: -8px;
   right: 3px;
 }
 .vote .movies .movie .right:hover {

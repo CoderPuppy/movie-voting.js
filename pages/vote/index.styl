@@ -9,9 +9,10 @@
 		z-index: 1
 		position: absolute
 		top: 10px
-		left: .5em
+		// left: .5em
+		left: 1%
 		bottom: 20px
-		width: 10em
+		width: 20%
 		background: hsl(0, 0%, 80%)
 		border-radius: 5px 0 0 5px
 
@@ -29,6 +30,7 @@
 			margin-right: 6px
 			margin-bottom: 3px
 			border-radius: 5px
+			height: 20px
 
 			&:hover
 				border: 1px solid hsl(0, 0%, 55%)
@@ -43,16 +45,65 @@
 			.name
 				text-shadow: hsl(0, 0%, 0%) 2px 2px 5px
 
+			.edit
+				position: absolute
+				right: 20px
+				color: hsl(0, 0%, 60%)
+
+				&:hover
+					color: hsl(0, 0%, 20%)
+
+			.delete
+				position: absolute
+				right: 5px
+				color: hsl(0, 0%, 60%)
+
+				&:hover
+					color: hsl(0, 0%, 20%)
+
+			form
+				display: none
+
+				position: absolute
+				top: 0
+				left: 4px
+				right: 22px
+				bottom: 0
+
+				.name
+					position: absolute
+					top: 0
+					left: 0
+					right: 0
+					bottom: 0
+					width: 100%
+
+			&.editing
+				.name
+					display: none
+
+				form
+					display: inline
+					.name
+						display: inline-block
+
+				.edit
+					display: none
+
 			&.selected
 				border: 1px solid hsl(0, 0%, 20%)
 				background: hsl(0, 0%, 45%)
+				.name
+					text-shadow: hsl(0, 0%, 100%) 1px 1px 5px
 
 		.new
 			basic-person()
 			color: hsl(0, 0%, 70%)
 			text-align: center
-			font-weight: bold
-			font-size: 16pt
+
+			.icon
+				font-weight: bold
+				font-size: 16pt
 
 			&:hover
 				border: 1px solid hsl(0, 0%, 55%)
@@ -63,7 +114,8 @@
 
 		position: absolute
 		top: 0
-		left: 10.5em
+		// left: 10.5em
+		left: 21%
 		right: 10px
 		bottom: 10px
 		border-radius: 5px
@@ -79,8 +131,7 @@
 			border-radius: 5px
 			padding-top: 5px
 
-		control-offset = 7px
-		control-font-size = 10pt
+		control-offset = 12px
 
 		basic-control()
 			cursor: pointer
@@ -112,12 +163,13 @@
 
 			.down
 				control()
-				right: control-offset + 1px
+				right: control-offset
 				bottom: 0px
 
 			.right
 				control()
-				top: 5px
+				top: 50%
+				margin-top: -8px
 				right: 3px
 
 			.left

@@ -1,8 +1,10 @@
 const hyperglue = require('hyperglue')
+const _person   = require('../_person')
 const _movie    = require('../_movie')
 const xtend     = require('xtend')
 const html      = require('fs').readFileSync(__dirname + '/index.html')
 const pull      = require('pull-stream')
+const Set       = require('es6-set')
 
 pull.pushable = require('pull-pushable')
 
@@ -16,11 +18,11 @@ function page(data) {
 			return 'Vote'
 		case 'body':
 			return hyperglue(html, {
-				'.person': data.people.map(function(person) {
-					return {
-						'.name': person.name
-					}
-				}),
+				'.real-people': {
+					_html: data.people.map(function(person) {
+						return _person(person).outerHTML
+					}).join('\n')
+				},
 				'.available': {
 					_html: data.movies.map(function(movie) {
 						return _movie(movie).outerHTML
@@ -38,11 +40,51 @@ function page(data) {
 	return render
 }
 
-page.stream = function() {
+page.stream = function(data) {
 	const out = pull.pushable()
+
+	const subscribed = new Set
+
+	const listeners = {
+		people: {
+			new: function(person) {
+				out.push([ 'new', person.id, person.name ])
+			},
+			update: function(person, newVote) {
+				if(subscribed.has(person.id))
+					out.push([ 'update', person.id, newVote ])
+			},
+			rename: function(person, newName) {
+				out.push([ 'rename', person.id, newName ])
+			},
+			delete: function(person) {
+				out.push([ 'delete', person.id ])
+			}
+		}
+	}
+
+	data.people.on('new', listeners.people.new)
+	data.people.on('update', listeners.people.update)
+	data.people.on('rename', listeners.people.rename)
+	data.people.on('delete', listeners.people.delete)
+
 	return {
 		sink: pull.drain(function(val) {
 			debug.stream(val)
+			switch(val[0]) {
+			case 'rename':
+				const person = data.people[val[1]]
+				if(person)
+					person.rename(val[2])
+				break
+			default:
+				debug.stream('unknown command: %s', val[0])
+			}
+		}, function() {
+			data.people.removeListener('new', listeners.people.new)
+			data.people.removeListener('update', listeners.people.update)
+			data.people.removeListener('rename', listeners.people.rename)
+			data.people.removeListener('delete', listeners.people.delete)
 		}),
 		source: out
 	}

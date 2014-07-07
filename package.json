@@ -2,6 +2,7 @@
 	"dependencies": {
 		"browserify": "^4.2.0",
 		"watchify": "^0.10.2",
+		"brfs": "^1.1.2",
 		"stylus": "^0.47.1",
 
 		"co": "^3.0.6",
