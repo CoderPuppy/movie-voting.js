@@ -2,8 +2,14 @@ const hyperglue = require('hyperglue')
 const _movie    = require('../_movie')
 const xtend     = require('xtend')
 const html      = require('fs').readFileSync(__dirname + '/index.html')
+const pull      = require('pull-stream')
 
-module.exports = function(data) {
+pull.pushable = require('pull-pushable')
+
+const debug = require('../../debug').sub('page', 'vote')
+debug.stream = debug.sub('stream')
+
+function page(data) {
 	function render(part) {
 		switch(part) {
 		case 'title':
@@ -31,3 +37,15 @@ module.exports = function(data) {
 
 	return render
 }
+
+page.stream = function() {
+	const out = pull.pushable()
+	return {
+		sink: pull.drain(function(val) {
+			debug.stream(val)
+		}),
+		source: out
+	}
+}
+
+module.exports = page

@@ -1,11 +1,18 @@
-const listen = require('./listen')
-const debug  = require('./debug')
-const http   = require('http')
-const url    = require('url')
-const co     = require('co')
-const qs     = require('qs')
+const MuxDemux = require('mux-demux')
+const listen   = require('./listen')
+const debug    = require('./debug')
+const http     = require('http')
+const pull     = require('pull-stream')
+const stps     = require('stream-to-pull-stream')
+const url      = require('url')
+const co       = require('co')
+const qs       = require('qs')
+
+pull.pushable = require('pull-pushable')
 
 const data = require('./data')
+
+debug.shoe = debug.sub('shoe')
 
 const pages = {
 	vote: require('./pages/vote'),
@@ -37,3 +44,29 @@ const server = http.createServer(function(req, res) {
 	})
 })
 listen(server, 3000, '0.0.0.0')
+
+const shoe = require('shoe')(function(conn) {
+	conn.pipe(MuxDemux(function(stream) {
+		const meta = stream.meta
+		const ps = {
+			sink: stps.sink(stream),
+			source: stps.source(stream),
+			meta: meta
+		}
+		switch(meta) {
+		case 'reset':
+			const push = pull.pushable()
+			data.on('loaded', function() {
+				push.push('reset')
+			})
+			pull(push, ps)
+			break
+		case 'vote':
+			pull(ps, page.vote.stream(), ps)
+			break
+		default:
+			debug.shoe('Unknown stream: %s', meta)
+		}
+	})).pipe(conn)
+})
+shoe.install(server, '/shoe')
