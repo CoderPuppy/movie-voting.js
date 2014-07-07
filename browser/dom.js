@@ -20,8 +20,8 @@ $.all = function $$(selector, root) {
 }
 
 $.wrap = function(node) {
-	if(Array.isArray(node)) {
-		return [].slice.call(root.querySelectorAll(selector)).map(function(node) {
+	if(typeof(node.length) == 'number') {
+		return [].slice.call(node).map(function(node) {
 			return wrapNode(node)
 		})
 	} else {
