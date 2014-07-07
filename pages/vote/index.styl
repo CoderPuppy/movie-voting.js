@@ -1,0 +1,142 @@
+.vote
+	position: absolute
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+
+	.people
+		z-index: 1
+		position: absolute
+		top: 10px
+		left: .5em
+		bottom: 20px
+		width: 10em
+		background: hsl(0, 0%, 80%)
+		border-radius: 5px 0 0 5px
+
+		border: 1px none hsl(0, 0%, 0%)
+		border-top-style: solid
+		border-left-style: solid
+		border-bottom-style: solid
+
+		padding-top: 6px
+
+		basic-person()
+			position: relative
+			border: 1px solid hsl(0, 0%, 70%)
+			margin-left:  6px
+			margin-right: 6px
+			margin-bottom: 3px
+			border-radius: 5px
+
+			&:hover
+				border: 1px solid hsl(0, 0%, 55%)
+
+		.person
+			basic-person()
+			padding: 2px
+			padding-left: 12px
+			font-weight: bold
+			color: hsl(0, 0%, 10%)
+
+			.name
+				text-shadow: hsl(0, 0%, 0%) 2px 2px 5px
+
+			&.selected
+				border: 1px solid hsl(0, 0%, 20%)
+				background: hsl(0, 0%, 45%)
+
+		.new
+			basic-person()
+			color: hsl(0, 0%, 70%)
+			text-align: center
+			font-weight: bold
+			font-size: 16pt
+
+			&:hover
+				border: 1px solid hsl(0, 0%, 55%)
+				color: hsl(0, 0%, 55%)
+
+	.movies
+		z-index: 0
+
+		position: absolute
+		top: 0
+		left: 10.5em
+		right: 10px
+		bottom: 10px
+		border-radius: 5px
+		border: 1px solid hsl(0, 0%, 0%)
+
+		background: hsl(0, 0%, 70%)
+
+		movies-list()
+			position: absolute
+			top: 5px
+			bottom: 5px
+			background: hsl(0, 0%, 50%)
+			border-radius: 5px
+			padding-top: 5px
+
+		control-offset = 7px
+		control-font-size = 10pt
+
+		basic-control()
+			cursor: pointer
+			color: hsl(0, 0%, 25%)
+
+			&:hover
+				color: hsl(0, 0%, 0%)
+
+		control()
+			basic-control()
+			position: absolute
+			font-size: control-font-size
+
+		.movie
+			position: relative
+			margin-left: 5px
+			margin-right: 5px
+			margin-bottom: 5px
+			font-weight: bold
+			background: hsl(0, 0%, 60%)
+			padding: 4px 2px 4px 2px
+			border: 1px solid hsl(0, 0%, 0%)
+			border-radius: 5px
+
+			.up
+				control()
+				top: 0px
+				right: control-offset
+
+			.down
+				control()
+				right: control-offset + 1px
+				bottom: 0px
+
+			.right
+				control()
+				top: 5px
+				right: 3px
+
+			.left
+				basic-control()
+				cursor: pointer
+
+		.selected
+			movies-list()
+			left: 5px
+			right: 50.5%
+
+			.movie .left
+				display: none
+
+		.available
+			movies-list()
+			left: 50.5%
+			right: 5px
+
+			.movie
+				.right, .up, .down
+					display: none

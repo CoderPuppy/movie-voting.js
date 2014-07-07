@@ -1,28 +1,23 @@
-const xtend = require('xtend')
-const co    = require('co')
+const hyperglue = require('hyperglue')
+const xtend     = require('xtend')
+const html      = require('fs').readFileSync(__dirname + '/index.html')
+const co        = require('co')
 
-module.exports = function(page) { return function(req, res) {
-	const subRender = page(req, res)
-	function render(part) { return co(function*() {
+module.exports = function(page) {
+	function render(part) {
 		switch(part) {
 		case 'root':
-			res.write('<!doctype html>\n')
-			res.write('<meta charset=utf-8>\n')
-			res.write('<title>')
-			yield subRender('title')
-			res.write(' - Movie Voting</title>\n')
-			res.write('<script src=index.js></script>')
-			yield subRender('head')
-			res.write('<h1>')
-			yield subRender('title')
-			res.write(' - Movie Voting</h1>')
-			yield subRender('body')
-			break
+			return hyperglue(html, {
+				'.title': page('title') + ' - Movie Voting',
+				'#content': { _html: page('body') }
+			}).outerHTML
+		default:
+			return ''
 		}
-	}) }
+	}
 	render.head = function(headers) {
-		return subRender.head(xtend(headers, { 'Content-Type': 'text/html' }))
+		return page.head(xtend(headers, { 'Content-Type': 'text/html' }))
 	}
 
 	return render
-} }
+}

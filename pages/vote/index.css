@@ -1,0 +1,154 @@
+.vote {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.vote .people {
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  left: 0.5em;
+  bottom: 20px;
+  width: 10em;
+  background: #ccc;
+  border-radius: 5px 0 0 5px;
+  border: 1px none #000;
+  border-top-style: solid;
+  border-left-style: solid;
+  border-bottom-style: solid;
+  padding-top: 6px;
+}
+.vote .people .person {
+  position: relative;
+  border: 1px solid #b3b3b3;
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  padding: 2px;
+  padding-left: 12px;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+.vote .people .person:hover {
+  border: 1px solid #8c8c8c;
+}
+.vote .people .person .name {
+  text-shadow: #000 2px 2px 5px;
+}
+.vote .people .person.selected {
+  border: 1px solid #333;
+  background: #737373;
+}
+.vote .people .new {
+  position: relative;
+  border: 1px solid #b3b3b3;
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  color: #b3b3b3;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16pt;
+}
+.vote .people .new:hover {
+  border: 1px solid #8c8c8c;
+}
+.vote .people .new:hover {
+  border: 1px solid #8c8c8c;
+  color: #8c8c8c;
+}
+.vote .movies {
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 10.5em;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  background: #b3b3b3;
+}
+.vote .movies .movie {
+  position: relative;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  background: #999;
+  padding: 4px 2px 4px 2px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+.vote .movies .movie .up {
+  cursor: pointer;
+  color: #404040;
+  position: absolute;
+  font-size: 10pt;
+  top: 0px;
+  right: 7px;
+}
+.vote .movies .movie .up:hover {
+  color: #000;
+}
+.vote .movies .movie .down {
+  cursor: pointer;
+  color: #404040;
+  position: absolute;
+  font-size: 10pt;
+  right: 8px;
+  bottom: 0px;
+}
+.vote .movies .movie .down:hover {
+  color: #000;
+}
+.vote .movies .movie .right {
+  cursor: pointer;
+  color: #404040;
+  position: absolute;
+  font-size: 10pt;
+  top: 5px;
+  right: 3px;
+}
+.vote .movies .movie .right:hover {
+  color: #000;
+}
+.vote .movies .movie .left {
+  cursor: pointer;
+  color: #404040;
+  cursor: pointer;
+}
+.vote .movies .movie .left:hover {
+  color: #000;
+}
+.vote .movies .selected {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  background: #808080;
+  border-radius: 5px;
+  padding-top: 5px;
+  left: 5px;
+  right: 50.5%;
+}
+.vote .movies .selected .movie .left {
+  display: none;
+}
+.vote .movies .available {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  background: #808080;
+  border-radius: 5px;
+  padding-top: 5px;
+  left: 50.5%;
+  right: 5px;
+}
+.vote .movies .available .movie .right,
+.vote .movies .available .movie .up,
+.vote .movies .available .movie .down {
+  display: none;
+}

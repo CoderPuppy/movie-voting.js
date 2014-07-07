@@ -6,12 +6,6 @@ const co     = require('co')
 const qs     = require('qs')
 
 const data = require('./data')
-data.load(function(err) {
-	if(err)
-		throw err
-	else
-		data.save()
-})
 
 const pages = {
 	vote: require('./pages/vote'),
@@ -34,11 +28,11 @@ const server = http.createServer(function(req, res) {
 			res.writeHead(200, { 'Content-Type': 'application/json' })
 			res.end(JSON.stringify(data))
 		} else if(pURL.pathname == '/' || pURL.pathname == '/vote') {
-			pages.draw(pages.layout(pages.vote(data)), req, res)
+			pages.draw(pages.layout(pages.vote(data)), res)
 		} else if(pURL.pathname == '/results') {
-			pages.draw(pages.layout(pages.results(data)), req, res)
+			pages.draw(pages.layout(pages.results(data)), res)
 		} else {
-			pages.draw(pages.layout(pages.notfound()), req, res)
+			pages.draw(pages.layout(pages.notfound(req.pURL.pathname)), res)
 		}
 	})
 })

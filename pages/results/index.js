@@ -1,19 +1,20 @@
-const xtend = require('xtend')
+const hyperglue = require('hyperglue')
+const xtend     = require('xtend')
+const data      = require('../../data')
+const stps      = require('stream-to-pull-stream')
+const html      = require('fs').readFileSync(__dirname + '/index.html')
 
-module.exports = function() { return function(req, res) {
+module.exports = function() {
 	function render(part) {
 		switch(part) {
 		case 'title':
-			res.write('Results')
-			break
+			return 'Results'
 		case 'body':
-			break
-		}
-
-		return function(cb) {
-			process.nextTick(function() {
-				cb(null)
-			})
+			return hyperglue(html, {
+				'.result': data.movies[data.voting.result].name
+			}).outerHTML
+		default:
+			return ''
 		}
 	}
 	render.head = function(headers) {
@@ -21,4 +22,4 @@ module.exports = function() { return function(req, res) {
 	}
 
 	return render
-} }
+}
