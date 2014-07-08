@@ -30,6 +30,8 @@ $.wrap = function(node) {
 }
 
 function wrapNode(node) {
+	if(!node) return null
+
 	node.find = function(sel) {
 		return $(sel, node)
 	}
