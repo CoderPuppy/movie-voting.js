@@ -79,11 +79,16 @@ module.exports = function(data) {
 
 function generateMatrix(person, movies) {
 	const vote = person.vote
+
 	const moviesOrder = {}
+	movies.forEach(function(movie, id) {
+		moviesOrder[id] = 10
+	})
 	vote.forEach(function(id, i) {
 		moviesOrder[id] = i
 	})
 	debug(moviesOrder)
+
 	const matrix = baseMatrix(movies)
 	var val
 	for(var x = 0; x < matrix.shape[0]; x++) {
