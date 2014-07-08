@@ -218,9 +218,9 @@ data.load()(function(err) {
 		throw err
 	else {
 		data.save()
-		data.people.new('Drew'  ).update([ 3, 2, 0, 1 ])
-		data.people.new('Jeremy').update([ 0, 2, 1, 3 ])
-		data.people.new('Becky' ).update([ 1, 2, 0, 3 ])
+		data.people.new('Drew'  ).update([ 2, 0, 1 ])
+		data.people.new('Jeremy').update([ 3, 0, 2 ])
+		data.people.new('Becky' ).update([ 1, 2, 0 ])
 	}
 })
 
