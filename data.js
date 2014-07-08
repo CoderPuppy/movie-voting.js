@@ -117,13 +117,9 @@ data.movies = (function() {
 			pull.filter(function(line) {
 				return line.length > 0
 			}),
-			pull.map(function(line) {
-				return line.split(' - ')
-			}),
 			pull.map(function(entry) {
 				return {
-					name: entry[0],
-					desc: entry[1]
+					name: entry
 				}
 			}),
 			pull.drain(function(movie) {
@@ -144,7 +140,7 @@ data.movies = (function() {
 		pull(
 			pull.values(movies),
 			pull.map(function(movie) {
-				return movie.name + ' - ' + movie.desc + '\n'
+				return movie.name + '\n'
 			}),
 			stps.sink(fs.createWriteStream(dataPath).on('end', function() {
 				debug.movies('saved')
