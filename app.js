@@ -45,7 +45,7 @@ const server = http.createServer(function(req, res) {
 })
 listen(server, 3000, '0.0.0.0')
 
-const shoe = require('shoe')(function(conn) {
+const shoe = require('shoe')(require('client-reloader')(function(conn) {
 	conn.pipe(MuxDemux(function(stream) {
 		const meta = stream.meta
 		const ps = {
@@ -68,5 +68,5 @@ const shoe = require('shoe')(function(conn) {
 			debug.shoe('Unknown stream: %s', meta)
 		}
 	})).pipe(conn)
-})
+}))
 shoe.install(server, '/shoe')

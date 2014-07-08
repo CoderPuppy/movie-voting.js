@@ -43,7 +43,7 @@ function page(data) {
 page.stream = function(data) {
 	const out = pull.pushable()
 
-	const subscribed = new Set
+	// const subscribed = new Set
 
 	const listeners = {
 		people: {
@@ -51,8 +51,8 @@ page.stream = function(data) {
 				out.push([ 'new', person.id, person.name ])
 			},
 			update: function(person, newVote) {
-				if(subscribed.has(person.id))
-					out.push([ 'update', person.id, newVote ])
+				// if(subscribed.has(person.id))
+				out.push([ 'update', person.id, newVote ])
 			},
 			rename: function(person, newName) {
 				out.push([ 'rename', person.id, newName ])
@@ -71,12 +71,22 @@ page.stream = function(data) {
 	return {
 		sink: pull.drain(function(val) {
 			debug.stream(val)
+			const person = data.people[val[1]]
 			switch(val[0]) {
+			case 'update':
+				if(person)
+					person.update(val[2])
+				break
+
 			case 'rename':
-				const person = data.people[val[1]]
 				if(person)
 					person.rename(val[2])
 				break
+
+			case 'new-id':
+				out.push([ 'new-id', data.people.new('').id ])
+				break
+
 			default:
 				debug.stream('unknown command: %s', val[0])
 			}

@@ -10,7 +10,8 @@ module.exports = function(person) {
 			// 	name: person.name
 			// }
 			'data-id': person.id.toString(),
-			'data-name': person.name
+			'data-name': person.name,
+			'data-vote': person.vote.join(',')
 		}
 	})
 }

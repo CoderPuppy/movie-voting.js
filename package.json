@@ -25,6 +25,8 @@
 		"hyperglue": "^1.3.1",
 		"shoe": "^0.0.15",
 		"mux-demux": "^3.7.9",
+		"reconnect-core": "^0.1.0",
+		"client-reloader": "^1.2.2",
 
 		"ndarray": "^1.0.15",
 		"ndarray-show": "^1.1.0",
