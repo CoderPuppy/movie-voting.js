@@ -39,7 +39,9 @@ module.exports = function(data) {
 				voting.result.push(y)
 			}
 		}
-		debug('result: %d', voting.result)
+		debug('result: %s', voting.result.map(function(id) {
+			return data.movies[id].name
+		}).join(', '))
 
 		voting.emit('update')
 	}
