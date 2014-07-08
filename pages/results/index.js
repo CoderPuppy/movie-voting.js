@@ -11,7 +11,18 @@ module.exports = function() {
 			return 'Results'
 		case 'body':
 			return hyperglue(html, {
-				'.result': data.movies[data.voting.result].name
+				'.result': (function(result) {
+					if(result.length == 1) {
+						return data.movies[result[0]].name + ' won!'
+					} else if(result.length == 0) {
+						return 'Uh, noone voted...'
+					} else {
+						const names = result.map(function(id) {
+							return data.movies[id].name
+						})
+						return names.slice(0, -1).join(', ') + ' and ' + names.slice(-1)[0] + ' tied'
+					}
+				})(data.voting.result)
 			}).outerHTML
 		default:
 			return ''

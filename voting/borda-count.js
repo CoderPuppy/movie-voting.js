@@ -1,10 +1,11 @@
 const debug = require('../debug').sub('voting', 'borda-count')
+const EE    = require('events').EventEmitter
 
 module.exports = function(data) {
-	const voting = {}
+	const voting = new EE
 
 	function update() {
-		voting.result = -1
+		voting.result = []
 
 		const scores = voting.people.reduce(function(acc, val) {
 			const res = []
@@ -19,10 +20,15 @@ module.exports = function(data) {
 		scores.forEach(function(score, id) {
 			if(score > maxScore) {
 				maxScore = score
-				voting.result = id
+				voting.result = []
+			}
+			if(score >= maxScore) {
+				voting.result.push(id)
 			}
 		})
 		debug('result: %d', voting.result)
+
+		voting.emit('update')
 	}
 
 	voting.update = function(person) { return function(cb) {

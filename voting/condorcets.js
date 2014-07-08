@@ -1,5 +1,6 @@
 const ndarray = require('ndarray')
 const debug   = require('../debug').sub('voting', 'condorcets')
+const EE      = require('events').EventEmitter
 
 ndarray.zeros = require('zeros')
 ndarray.show  = require('ndarray-show')
@@ -10,16 +11,19 @@ function baseMatrix(movies) {
 }
 
 module.exports = function(data) {
-	const voting = {}
+	const voting = new EE
 
 	function update() {
 		voting.matrix = voting.people.reduce(function(acc, val) {
 			ndarray.ops.add(acc, acc, val)
 			return acc
 		}, baseMatrix(data.movies))
+
 		debug('matrix:')
 		if(debug.enabled) console.log(ndarray.show(voting.matrix))
-		voting.result = -1
+
+		voting.result = []
+	
 		var maxVotes = 0
 		for (var y = 0; y < voting.matrix.shape[1]; y++) {
 			var votes = 0
@@ -29,10 +33,15 @@ module.exports = function(data) {
 
 			if(votes > maxVotes) {
 				maxVotes = votes
-				voting.result = y
+				voting.result = []
+			}
+			if(votes >= maxVotes) {
+				voting.result.push(y)
 			}
 		}
 		debug('result: %d', voting.result)
+
+		voting.emit('update')
 	}
 
 	voting.update = function(person) { return function(cb) {
