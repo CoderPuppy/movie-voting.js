@@ -39,7 +39,9 @@
 	},
 
 	"scripts": {
-		"start-dev": "supervisor --harmony -n exit -n error -e node,js,html -- app.js"
+		"start-dev": "supervisor --harmony -n exit -n error -e node,js,html -- app.js",
+		"build-vote-js-dev": "watchify -t es6ify -t brfs -d -o public/vote.js client.js pages/vote/client.js",
+		"build-styl-dev": "stylus -w `find public pages -name '*.styl'`"
 	},
 
 	"private": true
