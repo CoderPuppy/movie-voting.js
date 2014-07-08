@@ -45,8 +45,6 @@ data.people = (function() {
 
 		;(function() {
 			this.rename = function(name) {
-				if(!name) throw new Error('Names must not be empty')
-
 				debug.people('renaming %s (%d) to %s', this.name, this.id, name)
 
 				const oldName = this.name
