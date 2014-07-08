@@ -1,4 +1,4 @@
-const impl = require('./borda-count')
+const impl = require('./condorcets')
 
 module.exports = function(data) {
 	const voting = impl(data)
