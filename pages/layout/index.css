@@ -32,8 +32,8 @@ html {
   right: 0;
 }
 #topbar .right .link {
-  border-left: 1px solid #2c2c2c;
-  border-right: 1px solid #4e4e4e;
+  border-left: 1px solid #4e4e4e;
+  border-right: 1px solid #2c2c2c;
   color: #a6a6a6;
   background: #3d3d3d;
   padding: 0 1em 0 1em;
