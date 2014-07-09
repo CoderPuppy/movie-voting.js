@@ -151,7 +151,10 @@ function peopleInit(main) {
 	})
 
 	bean.on(people.find('.new'), 'click', function(e) {
-		people.emit('new', people.new(-1, '', []))
+		const person = people.new(-1, '', [])
+		people.select(person)
+		people.startEditing(person)
+		people.emit('new', person)
 	})
 
 	return people
