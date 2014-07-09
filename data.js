@@ -222,9 +222,10 @@ data.load()(function(err) {
 		throw err
 	else {
 		data.save()
-		data.people.new('Drew'  ).update([ 2, 0, 1 ])
-		data.people.new('Jeremy').update([ 3, 0, 2 ])
-		data.people.new('Becky' ).update([ 1, 2, 0 ])
+		data.people.new('Jeremy')
+		data.people.new('Becky' )
+		data.people.new('Drew'  )
+		data.people.new('Dad'   )
 	}
 })
 
