@@ -61,9 +61,15 @@ const shoe = require('shoe')(require('client-reloader')(function(conn) {
 			})
 			pull(push, ps)
 			break
+
 		case 'vote':
 			pull(ps, pages.vote.stream(data), ps)
 			break
+
+		case 'results':
+			pull(pages.results.stream(data), ps)
+			break
+
 		default:
 			debug.shoe('Unknown stream: %s', meta)
 		}
