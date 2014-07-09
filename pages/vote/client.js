@@ -88,7 +88,9 @@ function peopleInit(main) {
 
 	people.startEditing = function(person) {
 		person.classList.add('editing')
-		person.find('form .name').value = person.dataset.name
+		const nameField = person.find('form .name')
+		nameField.value = person.dataset.name
+		nameField.focus()
 	}
 
 	people.endEditing = function(person, save) {
@@ -246,7 +248,7 @@ function moviesInit(main) {
 		return movies.available.find('.movie[data-id="' + id + '"]')
 	}
 
-	bean.on(movies.available, 'click', '.movie .left', function(e) {
+	bean.on(movies.available, 'click', '.movie, .movie .left, .movie .name', function(e) {
 		movies.select($.wrap(this.parentNode))
 	})
 
