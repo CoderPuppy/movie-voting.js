@@ -1,0 +1,23 @@
+dark-bg = hsl(0, 0%, 20%)
+dark-fg = hsl(0, 0%, 60%)
+dark-border = hsl(0, 0%, 24%)
+dark-intensity = 13%
+
+light-border = hsl(0, 0%, 60%)
+
+bar(border-side, border-width)
+	background: dark-bg
+	color: dark-fg
+	text-shadow: hsl(0, 0%, 10%) 0px 0px 15px
+
+	border-{border-side}: border-width solid dark-border
+
+dark-vertlist()
+	border-top: 1px solid dark-bg + dark-intensity
+	border-bottom: 1px solid dark-bg - dark-intensity
+
+dark-horizlist()
+	border-left: 1px solid dark-bg - dark-intensity
+	border-right: 1px solid dark-bg + dark-intensity
+
+@require './scrollbar'

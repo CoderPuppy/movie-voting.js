@@ -1,0 +1,58 @@
+@require '../../style'
+
+topbar-height = 36px
+topbar-border = 4px
+topbar-padding = 4px
+topbar-total-height = topbar-height + topbar-border + (topbar-padding * 2)
+
+#topbar
+	position: fixed
+	top: 0
+	left: 0
+	right: 0
+	height: topbar-height
+
+	padding: topbar-padding
+
+	bar(bottom, topbar-border)
+
+	#title
+		display: inline-block
+		// position: absolute
+		// top: 0
+		// height: topbar-height
+		margin: -2px 0 0 1em
+
+		font-weight: bold
+
+	.right
+		position: absolute
+		top: 0
+		right: 0
+
+		.link
+			dark-horizlist()
+
+			color: dark-fg + dark-intensity
+			background: dark-bg + 5%
+
+			&:hover
+				background: dark-bg + dark-intensity
+
+			padding: 0 1em 0 1em
+
+			text-align: center
+
+			display: inline-block
+			height: topbar-height + (topbar-padding * 2)
+			line-height: topbar-height + (topbar-padding * 2)
+
+			&.vote
+				margin-right: -4px
+
+#content
+	position: fixed
+	top: topbar-total-height
+	left: 0
+	right: 0
+	bottom: 0
