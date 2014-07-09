@@ -42,5 +42,3 @@ function wrapNode(node) {
 }
 
 module.exports = $
-
-window.$ = $

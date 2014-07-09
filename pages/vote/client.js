@@ -27,8 +27,6 @@ domready(function() {
 	const main = $('.content.vote')
 	eeify(main)
 
-	window.voteMain = main
-
 	const people = main.people = peopleInit(main)
 	const movies = main.movies = moviesInit(main)
 
