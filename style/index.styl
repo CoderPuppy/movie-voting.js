@@ -5,6 +5,12 @@ dark-intensity = 13%
 
 light-border = hsl(0, 0%, 60%)
 
+vendor(prop, args...)
+	-webkit-{prop}: args
+	-moz-{prop}: args
+	-ms-{prop}: args
+	{prop}: args
+
 bar(border-side, border-width)
 	background: dark-bg
 	color: dark-fg

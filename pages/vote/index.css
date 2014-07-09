@@ -38,25 +38,28 @@ html {
   padding: 2px;
   padding-left: 12px;
   font-weight: bold;
+  cursor: pointer;
 }
 .content.vote .people .person:hover {
   background: #3d3d3d;
 }
-.content.vote .people .person .edit {
+.content.vote .people .person .button {
   position: absolute;
-  right: 20px;
   color: #6b6b6b;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-.content.vote .people .person .edit:hover {
+.content.vote .people .person .button:hover {
   color: #a3a3a3;
+}
+.content.vote .people .person .edit {
+  right: 20px;
 }
 .content.vote .people .person .delete {
-  position: absolute;
   right: 5px;
-  color: #6b6b6b;
-}
-.content.vote .people .person .delete:hover {
-  color: #a3a3a3;
 }
 .content.vote .people .person form {
   display: none;
@@ -75,6 +78,14 @@ html {
   width: 100%;
   background: #454545;
   border: none;
+  color: #999;
+  font-family: 'Times New Roman';
+  font-kerning: auto;
+  font-size: 16px;
+  font-style: normal;
+  font-variant: normal;
+  font-variant-ligatures: normal;
+  font-weight: bold;
 }
 .content.vote .people .person.editing .name {
   display: none;
@@ -99,6 +110,10 @@ html {
   color: #999;
   color: #6b6b6b;
   text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .content.vote .people .new:hover {
   background: #3d3d3d;
@@ -190,6 +205,9 @@ html {
   left: 50%;
   right: 5px;
   border-left: 1px solid #999;
+}
+.content.vote .movies .available .movie {
+  cursor: pointer;
 }
 .content.vote .movies .available .movie .right,
 .content.vote .movies .available .movie .up,

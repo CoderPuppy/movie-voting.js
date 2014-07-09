@@ -35,22 +35,24 @@
 			padding: 2px
 			padding-left: 12px
 			font-weight: bold
+			cursor: pointer
+
+			.button
+				position: absolute
+				color: dark-fg - 30%
+
+				cursor: pointer
+
+				vendor(user-select, none)
+
+				&:hover
+					color: dark-fg + 10%
 
 			.edit
-				position: absolute
 				right: 20px
-				color: dark-fg - 30%
-
-				&:hover
-					color: dark-fg + 10%
 
 			.delete
-				position: absolute
 				right: 5px
-				color: dark-fg - 30%
-
-				&:hover
-					color: dark-fg + 10%
 
 			form
 				display: none
@@ -70,6 +72,14 @@
 					width: 100%
 					background: dark-bg + 9%
 					border: none
+					color: dark-fg
+					font-family: 'Times New Roman'
+					font-kerning: auto
+					font-size: 16px
+					font-style: normal
+					font-variant: normal
+					font-variant-ligatures: normal
+					font-weight: bold
 
 			&.editing
 				.name
@@ -90,6 +100,8 @@
 			basic-person()
 			color: dark-fg - 30%
 			text-align: center
+
+			vendor(user-select, none)
 
 			.icon
 				font-weight: bold
@@ -174,5 +186,7 @@
 			border-left: 1px solid light-border
 
 			.movie
+				cursor: pointer
+				
 				.right, .up, .down
 					display: none
