@@ -20,7 +20,10 @@ function page(data) {
 			return hyperglue(html, {
 				'.real-people': {
 					_html: data.people.map(function(person) {
-						return _person(person).outerHTML
+						if(person)
+							return _person(person).outerHTML
+						else
+							return ''
 					}).join('\n')
 				},
 				'.available': {
@@ -43,15 +46,12 @@ function page(data) {
 page.stream = function(data) {
 	const out = pull.pushable()
 
-	// const subscribed = new Set
-
 	const listeners = {
 		people: {
 			new: function(person) {
-				out.push([ 'new', person.id, person.name ])
+				out.push([ 'new', person.id, person.name, person.vote ])
 			},
 			update: function(person, newVote) {
-				// if(subscribed.has(person.id))
 				out.push([ 'update', person.id, newVote ])
 			},
 			rename: function(person, newName) {
@@ -81,6 +81,11 @@ page.stream = function(data) {
 			case 'rename':
 				if(person)
 					person.rename(val[2])
+				break
+
+			case 'delete':
+				if(person)
+					person.delete()
 				break
 
 			case 'new-id':

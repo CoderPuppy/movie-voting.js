@@ -22,7 +22,7 @@ module.exports = function(data) {
 		debug('matrix:')
 		if(debug.enabled) console.log(ndarray.show(voting.matrix))
 
-		voting.result = []
+		voting.results = []
 	
 		var maxVotes = 0
 		for (var y = 0; y < voting.matrix.shape[1]; y++) {
@@ -33,13 +33,17 @@ module.exports = function(data) {
 
 			if(votes > maxVotes) {
 				maxVotes = votes
-				voting.result = []
+				voting.results = []
 			}
 			if(votes >= maxVotes) {
-				voting.result.push(y)
+				voting.results.push(y)
 			}
 		}
-		debug('result: %s', voting.result.map(function(id) {
+
+		if(maxVotes == 0)
+			voting.results = []
+
+		debug('results: %s', voting.results.map(function(id) {
 			return data.movies[id].name
 		}).join(', '))
 
@@ -55,10 +59,12 @@ module.exports = function(data) {
 		process.nextTick(function() { cb(null) })
 	} }
 
-	voting.remove = function(person) { return function(cb) {
+	voting.delete = function(person) { return function(cb) {
 		if(!cb) cb = function(err) { if(err) throw err }
 
-		voting.people[person.id] = baseMatrix(data)
+		voting.people[person.id] = baseMatrix(data.movies)
+
+		update()
 
 		process.nextTick(function() { cb(null) })
 	} }
@@ -68,7 +74,7 @@ module.exports = function(data) {
 
 		voting.people = []
 		voting.matrix = baseMatrix(data.movies)
-		voting.result = -1
+		voting.results = []
 		debug('reseting')
 
 		process.nextTick(function() { cb(null) })

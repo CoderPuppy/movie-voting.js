@@ -24,7 +24,7 @@ debug('loaded')
 domready(function() {
 	debug('domready', $('body'))
 
-	const main = $('.vote')
+	const main = $('.content.vote')
 	eeify(main)
 
 	window.voteMain = main
@@ -66,7 +66,7 @@ function peopleInit(main) {
 	people.delete = function(person) {
 		people.real.removeChild(person)
 
-		if(people.selected.dataset.id == person.dataset.id) {
+		if(people.selected && people.selected.dataset.id == person.dataset.id) {
 			people.selected = null
 		}
 	}
@@ -294,8 +294,10 @@ function connInit(main) {
 					debug.stream(val)
 					var person
 					switch(val[0]) {
-					// case 'new':
-					// 	break
+					case 'new':
+						if(!main.people.get(val[1]))
+							main.people.new(val[1], val[2], val[3])
+						break
 
 					case 'rename':
 						main.people.rename(main.people.get(val[1]), val[2])
@@ -305,6 +307,12 @@ function connInit(main) {
 						person = main.people.get(val[1])
 						if(person)
 							main.people.setVote(person, val[2], true)
+						break }
+
+					case 'delete': {
+						person = main.people.get(val[1])
+						if(person)
+							main.people.delete(person)
 						break }
 
 					case 'new-id': {

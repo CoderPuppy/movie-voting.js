@@ -5,7 +5,7 @@ module.exports = function(data) {
 	const voting = new EE
 
 	function update() {
-		voting.result = []
+		voting.results = []
 
 		const scores = voting.people.reduce(function(acc, val) {
 			const res = []
@@ -20,13 +20,17 @@ module.exports = function(data) {
 		scores.forEach(function(score, id) {
 			if(score > maxScore) {
 				maxScore = score
-				voting.result = []
+				voting.results = []
 			}
 			if(score >= maxScore) {
-				voting.result.push(id)
+				voting.results.push(id)
 			}
 		})
-		debug('result: %s', voting.result.map(function(id) {
+
+		if(maxScore == 0)
+			voting.results = []
+
+		debug('results: %s', voting.results.map(function(id) {
 			return data.movies[id].name
 		}).join(', '))
 
@@ -47,10 +51,12 @@ module.exports = function(data) {
 		process.nextTick(function() { cb(null) })
 	} }
 
-	voting.remove = function(person) { return function(cb) {
+	voting.delete = function(person) { return function(cb) {
 		if(!cb) cb = function(err) { if(err) throw err }
 
 		voting.people[person.id] = new Array(data.movies.length).join().split(',').map(function() { return 0 })
+
+		update()
 
 		process.nextTick(function() { cb(null) })
 	} }

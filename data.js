@@ -39,7 +39,8 @@ data.people = (function() {
 
 			this.update([])
 
-			people.emit('new', this)
+			const self = this
+			process.nextTick(function() { people.emit('new', self) })
 		}
 		util.inherits(Person, EE)
 
@@ -69,9 +70,16 @@ data.people = (function() {
 			}
 
 			this.delete = function() {
-				people[id] = undefined
+				debug.people('deleting %s (%d)', this.name, this.id)
+
+				people[this.id] = undefined
+				this.vote = []
+
+				data.voting.delete(this)()
+
 				this.emit('delete')
 				people.emit('delete', this)
+
 				return this
 			}
 		}).call(Person.prototype)
