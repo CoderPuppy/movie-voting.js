@@ -252,7 +252,11 @@ function moviesInit(main) {
 	}
 
 	bean.on(movies.available, 'click', '.movie, .movie .left, .movie .name', function(e) {
-		movies.select($.wrap(this.parentNode))
+		var movie = $.wrap(this)
+		if(!movie.classList.contains('movie')) {
+			movie = $.wrap(movie.parentNode)
+		}
+		movies.select(movie)
 	})
 
 	return movies
