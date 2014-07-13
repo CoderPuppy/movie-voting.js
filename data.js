@@ -222,6 +222,11 @@ data.load()(function(err) {
 		throw err
 	else {
 		data.save()
+
+		// data.people.new('John Doe')
+		// data.people.new('Jane Doe')
+		// data.people.new('Fiz Buz' )
+
 		data.people.new('Jeremy')
 		data.people.new('Becky' )
 		data.people.new('Drew'  )
