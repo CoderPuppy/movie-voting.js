@@ -88,7 +88,7 @@ function generateMatrix(person, movies) {
 
 	const moviesOrder = {}
 	movies.forEach(function(movie, id) {
-		moviesOrder[id] = 10
+		moviesOrder[id] = Infinity
 	})
 	vote.forEach(function(id, i) {
 		moviesOrder[id] = i
