@@ -24,23 +24,47 @@ module.exports = function(data) {
 
 		voting.results = []
 	
-		var maxVotes = 0
-		for (var y = 0; y < voting.matrix.shape[1]; y++) {
-			var votes = 0
-			for(var x = 0; x < voting.matrix.shape[0]; x++) {
-				votes += voting.matrix.get(x, y)
-			}
+		const wins = {}
+		data.movies.forEach(function(movie, id) {
+			wins[id] = 0
+		})
 
-			if(votes > maxVotes) {
-				maxVotes = votes
-				voting.results = []
-			}
-			if(votes >= maxVotes) {
-				voting.results.push(y)
+		for(var y = 0; y < voting.matrix.shape[1]; y++) {
+			for(var x = 0; x < voting.matrix.shape[0]; x++) {
+				if(x <= y) continue
+
+				var runner   = voting.matrix.get(x, y)
+				var opponent = voting.matrix.get(y, x)
+
+				if(runner > opponent)
+					wins[y] += 1
+				else if(opponent > runner)
+					wins[x] += 1
+
+				debug.trace('%s (%d): %d | %s (%d): %d', data.movies[y].name, y, runner, data.movies[x].name, x, opponent)
 			}
 		}
 
-		if(maxVotes == 0)
+		(function() {
+			var maxWins = 0
+			for(var id = 0; id < data.movies.length; id++) {
+				if(wins[id] >= data.movies.length) {
+					voting.results = [ id ]
+					return
+				} else if(wins[id] >= maxWins) {
+					if(wins[id] > maxWins) {
+						maxWins = wins[id]
+						voting.results = []
+					}
+
+					voting.results.push(id)
+				}
+			}
+		})()
+
+		debug('wins:', wins)
+
+		if(voting.results.length == data.movies.length)
 			voting.results = []
 
 		debug('results: %s', voting.results.map(function(id) {
@@ -93,7 +117,7 @@ function generateMatrix(person, movies) {
 	vote.forEach(function(id, i) {
 		moviesOrder[id] = i
 	})
-	debug(moviesOrder)
+	debug('movies order:', moviesOrder)
 
 	const matrix = baseMatrix(movies)
 	var val
