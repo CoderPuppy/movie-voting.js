@@ -197,9 +197,10 @@ data.load = function() { return function(cb) {
 	if(!cb) cb = function(err) { if(err) throw err }
 
 	data.people.reset()
+	data.movies.reset()
 
 	par([
-		data.movies.load(),
+		// data.movies.load(),
 		data.voting.reset()
 	])(function(err) {
 		if(err) {
