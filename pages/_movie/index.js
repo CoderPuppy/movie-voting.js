@@ -5,6 +5,7 @@ module.exports = function(movie) {
 	return hyperglue(html, {
 		'.name': movie.name,
 		'.desc': movie.desc,
+		'form .name': '',
 		'.movie': {
 			'data-id': movie.id.toString(),
 			'data-name': movie.name
