@@ -33,5 +33,12 @@ const conn = require('reconnect-core')(require('shoe'))(require('client-reloader
 		return stps.source(stream)
 	})
 
+	pull(
+		mx.source('reset'),
+		pull.drain(function() {
+			window.location.reload()
+		})
+	)
+
 	exports.emit('connect', mx)
 })).connect('/shoe')
