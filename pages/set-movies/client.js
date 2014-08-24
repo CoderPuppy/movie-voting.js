@@ -4,15 +4,6 @@ const _movie   = require('../_movie')
 const bean     = require('bean')
 const conn     = require('../../browser/conn')
 const xhr      = require('xhr')
-const EE       = require('events').EventEmitter
-
-function eeify(o) {
-	for(var k in EE.prototype) {
-		o[k] = EE.prototype[k]
-	}
-	EE.call(o)
-	return o
-}
 
 const pull    = require('pull-stream')
 pull.pushable = require('pull-pushable')
@@ -27,11 +18,9 @@ domready(function() {
 	debug('domready', $('body'))
 
 	const main = $('.content.set-movies')
-	eeify(main)
 
 	const movies = main.find('.movies')
 	movies.real = movies.find('.real-movies')
-	eeify(movies)
 
 	;(function() {
 		// var last = between.lo
@@ -90,10 +79,11 @@ domready(function() {
 		nameField.focus()
 	}
 
-	movies.endEditing = function(movie, save) {
+	movies.endEditing = function(movie) {
 		movie.classList.remove('editing')
-		if(save)
-			movies.rename(movie, movie.find('form .name').value)
+		movies.rename(movie, movie.find('form .name').value)
+		if(movie.dataset.name.replace(/\s+/g, '').length == 0)
+			movies.delete(movie)
 	}
 
 	bean.on(movies, 'click', '.movie .edit', function(e) {
@@ -104,20 +94,20 @@ domready(function() {
 		e.preventDefault()
 
 		const movie = $.wrap(this.parentNode)
-		movies.endEditing(movie, true)
-		movies.emit('rename', movie)
+		movies.endEditing(movie)
+
+		const newMovie = movies.new('')
+		movies.startEditing(newMovie)
 	})
 
 	bean.on(movies, 'click', '.movie .delete', function(e) {
 		const movie = $.wrap(this.parentNode)
-		movies.emit('delete', movie)
 		movies.delete(movie)
 	})
 
 	bean.on(movies.find('.new'), 'click', function(e) {
 		const movie = movies.new('')
 		movies.startEditing(movie)
-		movies.emit('new', movie)
 	})
 
 	bean.on(movies.find('.save'), 'click', function(e) {
@@ -126,6 +116,8 @@ domready(function() {
 				id: movies.list.indexOf(el),
 				name: el.dataset.name
 			}
+		}).filter(function(movie) {
+			return movie.name.replace(/\s+/g, '').length > 0
 		})
 		// console.log(e, moviesData)
 		xhr({
