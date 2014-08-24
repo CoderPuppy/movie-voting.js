@@ -1,0 +1,129 @@
+@require '../../style'
+
+.content.set-movies
+	position: absolute
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+
+	people-width = 15%
+
+	.movies
+		margin-top: 1%
+		margin-left: 7%
+		margin-right: 7%
+
+		z-index: 2
+
+		// bar(right, 4px)
+
+		basic-movie()
+			// dark-vertlist()
+			position: relative
+			height: 20px
+			// color: dark-fg
+
+			// &:hover
+			// 	background: dark-bg + 5%
+
+		.movie
+			basic-movie()
+			padding: 2px
+			padding-left: 12px
+			font-weight: bold
+			cursor: pointer
+
+			.selection
+				display: none
+
+			.button
+				position: absolute
+				color: dark-fg - 30%
+
+				cursor: pointer
+
+				vendor(user-select, none)
+
+				&:hover
+					color: dark-fg + 10%
+
+			.edit
+				right: 20px
+
+			.delete
+				right: 5px
+
+			form
+				display: none
+
+				position: absolute
+				top: 0
+				left: 4px
+				right: 23px
+				bottom: 0
+
+				.name
+					position: absolute
+					top: 0
+					left: 0
+					right: 0
+					bottom: 0
+					margin-left: .5em
+					width: 100%
+					border: none
+					font-family: 'Times New Roman'
+					font-kerning: auto
+					font-size: 16px
+					font-style: normal
+					font-variant: normal
+					font-variant-ligatures: normal
+					font-weight: bold
+
+			&.editing
+				.name
+					display: none
+
+				form
+					display: inline
+					.name
+						display: inline-block
+
+				.edit
+					display: none
+
+			&.selected
+				background: dark-bg + 9%
+
+		.controls
+			basic-movie()
+			color: hsl(0, 0%, 10%)
+			text-align: center
+
+			vendor(user-select, none)
+
+			button()
+				display: inline-block
+				cursor: pointer
+
+				&:hover
+					color: hsl(0, 0%, 60%)
+					shadow-color = hsla(0, 0%, 20%, 100%)
+					shadow-blur = 1px
+					text-shadow: shadow-color  1px  1px shadow-blur, shadow-color  1px -1px shadow-blur, shadow-color -1px -1px shadow-blur, shadow-color -1px  1px shadow-blur
+					// color: hsl(0, 0%, 20%)
+					// text-shadow: hsl(0, 0%, 0%) 0 0 3px
+
+			.new
+				button()
+				.icon
+					font-weight: bold
+					font-size: 16pt
+					cursor: pointer
+
+			.save
+				button()
+				position: absolute
+				right: 0
+				font-weight: bold
+				font-size: 16pt

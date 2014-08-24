@@ -1,0 +1,128 @@
+html {
+  overflow: auto;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  box-shadow: inset 1px 1px 3px #323232;
+  background: #535353;
+}
+.content.set-movies {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.content.set-movies .movies {
+  margin-top: 1%;
+  margin-left: 7%;
+  margin-right: 7%;
+  z-index: 2;
+}
+.content.set-movies .movies .movie {
+  position: relative;
+  height: 20px;
+  padding: 2px;
+  padding-left: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.content.set-movies .movies .movie .selection {
+  display: none;
+}
+.content.set-movies .movies .movie .button {
+  position: absolute;
+  color: #6b6b6b;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.content.set-movies .movies .movie .button:hover {
+  color: #a3a3a3;
+}
+.content.set-movies .movies .movie .edit {
+  right: 20px;
+}
+.content.set-movies .movies .movie .delete {
+  right: 5px;
+}
+.content.set-movies .movies .movie form {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 4px;
+  right: 23px;
+  bottom: 0;
+}
+.content.set-movies .movies .movie form .name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-left: 0.5em;
+  width: 100%;
+  border: none;
+  font-family: 'Times New Roman';
+  font-kerning: auto;
+  font-size: 16px;
+  font-style: normal;
+  font-variant: normal;
+  font-variant-ligatures: normal;
+  font-weight: bold;
+}
+.content.set-movies .movies .movie.editing .name {
+  display: none;
+}
+.content.set-movies .movies .movie.editing form {
+  display: inline;
+}
+.content.set-movies .movies .movie.editing form .name {
+  display: inline-block;
+}
+.content.set-movies .movies .movie.editing .edit {
+  display: none;
+}
+.content.set-movies .movies .movie.selected {
+  background: #454545;
+}
+.content.set-movies .movies .controls {
+  position: relative;
+  height: 20px;
+  color: #1a1a1a;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.content.set-movies .movies .controls .new {
+  display: inline-block;
+  cursor: pointer;
+}
+.content.set-movies .movies .controls .new:hover {
+  color: #999;
+  text-shadow: #333 1px 1px 1px, #333 1px -1px 1px, #333 -1px -1px 1px, #333 -1px 1px 1px;
+}
+.content.set-movies .movies .controls .new .icon {
+  font-weight: bold;
+  font-size: 16pt;
+  cursor: pointer;
+}
+.content.set-movies .movies .controls .save {
+  display: inline-block;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  font-weight: bold;
+  font-size: 16pt;
+}
+.content.set-movies .movies .controls .save:hover {
+  color: #999;
+  text-shadow: #333 1px 1px 1px, #333 1px -1px 1px, #333 -1px -1px 1px, #333 -1px 1px 1px;
+}
