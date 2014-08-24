@@ -17,9 +17,10 @@ html {
   bottom: 0;
 }
 .content.set-movies .movies {
-  margin-top: 1%;
-  margin-left: 7%;
-  margin-right: 7%;
+  width: 24%;
+  margin-top: 2em;
+  margin-left: 35%;
+  margin-right: 35%;
   z-index: 2;
 }
 .content.set-movies .movies .movie {
