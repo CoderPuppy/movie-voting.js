@@ -231,6 +231,7 @@ data.load()(function(err) {
 		data.people.new('Becky' )
 		data.people.new('Drew'  )
 		data.people.new('Dad'   )
+		data.people.new('Mom'   )
 	}
 })
 
