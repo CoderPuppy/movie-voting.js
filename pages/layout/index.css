@@ -46,6 +46,9 @@ html {
   background: #4e4e4e;
 }
 #topbar .right .link.vote {
+  margin-right: -8px;
+}
+#topbar .right .link.results {
   margin-right: -4px;
 }
 #content {
