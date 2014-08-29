@@ -111,6 +111,10 @@ domready(function() {
 	})
 
 	bean.on(movies.find('.save'), 'click', function(e) {
+		movies.real.findAll('.movie.editing').forEach(function(movie) {
+			movies.endEditing(movie)
+		})
+
 		const moviesData = movies.list.map(function(el) {
 			return {
 				id: movies.list.indexOf(el),
