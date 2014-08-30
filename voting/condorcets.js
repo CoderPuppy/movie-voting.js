@@ -71,18 +71,22 @@ module.exports = function(data) {
 			return movie.name.replace(/a|an|and|the|\s+/gi, '').replace(/[^A-Z:]/g, '')
 		})
 
-		titles.maxLength = Math.max.apply(Math, titles.map(function(title) {
+		titles.maxLength = Math.max.apply(Math, [0].concat(titles.map(function(title) {
 			return title.length
-		}))
+		})))
 		console.log(titles.maxLength)
 
-		function renderMatrix(matrix) {
+		function renderMatrix(matrix, numbers) {
 			var res = new Array(titles.maxLength + 2).join(' ') + titles.join(' ')
 			for(var y = 0; y < matrix.shape[1]; y++) {
 				res += '\n' + titles[y] + new Array(titles.maxLength - titles[y].length + 2).join(' ')
 				for(var x = 0; x < matrix.shape[0]; x++) {
-					var letter = matrix.get(x, y) ? '<' : ' '
-					res += letter + new Array(titles[x].length).join(' ') + ' '
+					var num = matrix.get(x, y)
+					var content = num ? '<' : ' '
+					if(numbers && num)
+						content = num + ''
+					// console.log(titles[x], content.length)
+					res += content + new Array(Math.max(titles[x].length + 1 - content.length, 0)).join(' ') + ' '
 				}
 				res = res.slice(0, res.length - 1)
 			}
@@ -90,7 +94,7 @@ module.exports = function(data) {
 		}
 
 		// console.log(titles)
-		voting.debugInfo = 'Result:\n' + renderMatrix(voting.matrix).split('\n').map(function(line) {
+		voting.debugInfo = 'Result:\n' + renderMatrix(voting.matrix, true).split('\n').map(function(line) {
 			return '  ' + line
 		}).join('\n') + '\n\n' + voting.people.map(function(matrix, i) {
 			const person = data.people[i]
