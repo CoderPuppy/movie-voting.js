@@ -17,7 +17,8 @@ function page(data) {
 			return hyperglue(html, {
 				'.result': strifyResults(data.voting.results.map(function(id) {
 					return data.movies[id].name
-				}))
+				})),
+				'.debug': data.voting.debugInfo
 			}).outerHTML
 		default:
 			return ''
@@ -32,9 +33,9 @@ function page(data) {
 page.stream = function(data) {
 	const out = pull.pushable()
 	data.voting.on('update', function() {
-		out.push(data.voting.results.map(function(id) {
+		out.push([data.voting.results.map(function(id) {
 			return data.movies[id].name
-		}))
+		}), data.voting.debugInfo])
 	})
 	return out
 }

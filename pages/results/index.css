@@ -3,3 +3,22 @@
   font-size: 20pt;
   font-weight: bold;
 }
+.results pre.debug {
+  overflow: auto;
+  position: fixed;
+  top: 10em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.results .debug-hint {
+  position: fixed;
+  color: rgba(0,0,0,0.6);
+  text-shadow: rgba(77,77,77,0.6) 0 0 2px;
+  left: 10%;
+  bottom: 0;
+  font-size: 9pt;
+}
+.results .debug-hint code {
+  font-size: 7pt;
+}

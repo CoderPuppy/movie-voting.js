@@ -26,6 +26,12 @@ domready(function() {
 	const main = $('.content.results')
 	eeify(main)
 	main.result = main.find('.result')
+	main.debug = main.find('pre.debug')
+
+	if(localStorage.resultsDebug)
+		main.find('.debug-hint').style.display = 'none'
+	else
+		main.debug.style.display = 'none'
 
 	connInit(main)
 })
@@ -35,7 +41,8 @@ function connInit(main) {
 		pull(
 			mx.source('results'),
 			pull.drain(function(results) {
-				main.result.textContent = strifyResults(results)
+				main.result.textContent = strifyResults(results[0])
+				main.debug.textContent = results[1]
 			})
 		)
 	})

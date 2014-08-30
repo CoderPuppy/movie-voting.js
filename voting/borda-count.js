@@ -30,6 +30,8 @@ module.exports = function(data) {
 		if(maxScore == 0)
 			voting.results = []
 
+		voting.debugInfo = ''
+
 		debug('results: %s', voting.results.map(function(id) {
 			return data.movies[id].name
 		}).join(', '))

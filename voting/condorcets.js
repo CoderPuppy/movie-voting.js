@@ -1,7 +1,7 @@
-const ndarray = require('ndarray')
-const debug   = require('../debug').sub('voting', 'condorcets')
-const EE      = require('events').EventEmitter
+const debug = require('../debug').sub('voting', 'condorcets')
+const EE    = require('events').EventEmitter
 
+const ndarray = require('ndarray')
 ndarray.zeros = require('zeros')
 ndarray.show  = require('ndarray-show')
 ndarray.ops   = require('ndarray-ops')
@@ -66,6 +66,41 @@ module.exports = function(data) {
 
 		if(voting.results.length == data.movies.length)
 			voting.results = []
+
+		const titles = data.movies.map(function(movie) {
+			return movie.name.replace(/a|an|and|the|\s+/gi, '').replace(/[^A-Z:]/g, '')
+		})
+
+		titles.maxLength = Math.max.apply(Math, titles.map(function(title) {
+			return title.length
+		}))
+		console.log(titles.maxLength)
+
+		function renderMatrix(matrix) {
+			var res = new Array(titles.maxLength + 2).join(' ') + titles.join(' ')
+			for(var y = 0; y < matrix.shape[1]; y++) {
+				res += '\n' + titles[y] + new Array(titles.maxLength - titles[y].length + 2).join(' ')
+				for(var x = 0; x < matrix.shape[0]; x++) {
+					var letter = matrix.get(x, y) ? '<' : ' '
+					res += letter + new Array(titles[x].length).join(' ') + ' '
+				}
+				res = res.slice(0, res.length - 1)
+			}
+			return res
+		}
+
+		// console.log(titles)
+		voting.debugInfo = 'Result:\n' + renderMatrix(voting.matrix).split('\n').map(function(line) {
+			return '  ' + line
+		}).join('\n') + '\n\n' + voting.people.map(function(matrix, i) {
+			const person = data.people[i]
+			console.log(person.vote)
+			return person.name + ': ' + person.vote.map(function(i) {
+				return titles[i]
+			}).join(' ') + '\n' + renderMatrix(matrix).split('\n').map(function(line) {
+				return '  ' + line
+			}).join('\n')
+		}).join('\n\n')
 
 		debug('results: %s', voting.results.map(function(id) {
 			return data.movies[id].name

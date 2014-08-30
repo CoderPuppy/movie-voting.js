@@ -1,9 +1,29 @@
-.results h2
-	// border: 1px solid hsl(0, 0%, 10%)
-	// border-radius: 5px
-	// display: inline-block
-	// padding: 1em
-	// background: hsl(0, 0%, 80%)
-	margin-left: 4em
-	font-size: 20pt
-	font-weight: bold
+.results
+	h2
+		// border: 1px solid hsl(0, 0%, 10%)
+		// border-radius: 5px
+		// display: inline-block
+		// padding: 1em
+		// background: hsl(0, 0%, 80%)
+		margin-left: 4em
+		font-size: 20pt
+		font-weight: bold
+
+	pre.debug
+		overflow: auto
+		position: fixed
+		top: 10em
+		left: 0
+		right: 0
+		bottom: 0
+
+	.debug-hint
+		position: fixed
+		color: hsla(0, 0%, 0%, 60%)
+		text-shadow: hsla(0, 0%, 30%, 60%) 0 0 2px
+		left: 10%
+		bottom: 0
+		font-size: 9pt
+
+		code
+			font-size: 7pt
