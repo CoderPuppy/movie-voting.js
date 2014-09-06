@@ -80,7 +80,7 @@ module.exports = function(data) {
 
 		voting.matrix = baseMatrix(data.movies)
 		voting.people.forEach(function(matrix) {
-			console.log(ndarray.ops.add(voting.matrix, voting.matrix, matrix))
+			ndarray.ops.add(voting.matrix, voting.matrix, matrix)
 		})
 
 		debug('matrix:')
