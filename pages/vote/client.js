@@ -82,6 +82,8 @@ function peopleInit(main) {
 		people.getVote(person).forEach(function(id) {
 			main.movies.select(main.movies.available.get(id), true)
 		})
+
+		main.movies.blocker.style.display = 'none'
 	}
 
 	people.startEditing = function(person) {
@@ -161,6 +163,8 @@ function peopleInit(main) {
 function moviesInit(main) {
 	const movies = main.find('.movies')
 	eeify(movies)
+
+	movies.blocker = movies.find('.blocker')
 
 	movies.select = function(movie, uiOnly) {
 		movies.available.removeChild(movie)

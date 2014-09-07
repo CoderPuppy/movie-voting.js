@@ -122,6 +122,16 @@
   right: 0;
   bottom: 0;
 }
+.content.vote .movies .blocker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #808080;
+  opacity: 0.7;
+  z-index: 100;
+}
 .content.vote .movies .movie {
   position: relative;
   margin-left: 5px;
