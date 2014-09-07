@@ -7,6 +7,7 @@ const stps     = require('stream-to-pull-stream')
 const url      = require('url')
 const co       = require('co')
 const qs       = require('qs')
+const fs       = require('fs')
 
 pull.pushable = require('pull-pushable')
 pull.split    = require('pull-split')
@@ -57,6 +58,7 @@ const server = http.createServer(function(req, res) {
 
 		case 'PUT':
 			var sent = ''
+			const handle = fs.createWriteStream(data.path, { flags: 'w' })
 			pull(
 				stps.source(req),
 				pull.split(),
@@ -72,9 +74,11 @@ const server = http.createServer(function(req, res) {
 					movies.forEach(function(movie) {
 						movie.id = data.movies.length
 						data.movies.push(movie)
+						handle.write(movie.name + '\n')
 					})
 					data.movies.emit('loaded')
 					data.emit('loaded')
+					handle.close()
 					res.end()
 				})
 			)

@@ -13,7 +13,7 @@ debug.people = debug.sub('people')
 
 const data = new EE
 
-const dataPath = path.join(__dirname, 'movies')
+data.path = path.join(__dirname, 'movies')
 
 data.people = (function() {
 	const people = []
@@ -120,7 +120,7 @@ data.movies = (function() {
 		debug.movies('loading')
 
 		pull(
-			stps.source(fs.createReadStream(dataPath)),
+			stps.source(fs.createReadStream(data.path)),
 			split(),
 			pull.filter(function(line) {
 				return line.length > 0
@@ -150,7 +150,7 @@ data.movies = (function() {
 			pull.map(function(movie) {
 				return movie.name + '\n'
 			}),
-			stps.sink(fs.createWriteStream(dataPath).on('end', function() {
+			sink(fs.createWriteStream(data.path).on('end', function() {
 				debug.movies('saved')
 				cb(null)
 			}).on('error', function(err) {
@@ -197,10 +197,10 @@ data.load = function() { return function(cb) {
 	if(!cb) cb = function(err) { if(err) throw err }
 
 	data.people.reset()
-	data.movies.reset()
+	// data.movies.reset()
 
 	par([
-		// data.movies.load(),
+		data.movies.load(),
 		data.voting.reset()
 	])(function(err) {
 		if(err) {
