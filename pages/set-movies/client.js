@@ -73,6 +73,7 @@ domready(function() {
 	}
 
 	movies.startEditing = function(movie) {
+		movies.real.findAll('.movie.editing').forEach(movies.endEditing)
 		movie.classList.add('editing')
 		const nameField = movie.find('form .name')
 		nameField.value = movie.dataset.name
