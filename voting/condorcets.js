@@ -145,6 +145,8 @@ module.exports = function(data) {
 			return '  ' + line
 		}).join('\n') + '\n\n' + voting.people.map(function(matrix, i) {
 			const person = data.people[i]
+			if(!person)
+				return "Deleted: " + i
 			return person.name + ': ' + person.vote.map(function(i) {
 				return titles[i]
 			}).join(' ') + '\n' + renderMatrix(matrix).split('\n').map(function(line) {
