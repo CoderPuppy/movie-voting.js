@@ -7,7 +7,13 @@ ndarray.show  = require('ndarray-show')
 ndarray.ops   = require('ndarray-ops')
 
 function baseMatrix(movies) {
-	return ndarray.zeros([ movies.length, movies.length ])
+	const matrix = ndarray.zeros([ movies.length, movies.length ])
+	for(var x = 0; x < matrix.shape[0]; x++) {
+		for(var y = 0; y < matrix.shape[1]; y++) {
+			matrix.set(x, y, 0)
+		}
+	}
+	return matrix
 }
 
 module.exports = function(data) {
