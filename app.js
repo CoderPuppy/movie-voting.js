@@ -58,7 +58,8 @@ const server = http.createServer(function(req, res) {
 
 		case 'PUT':
 			var sent = ''
-			const handle = fs.createWriteStream(data.path, { flags: 'w' })
+			// const handle = fs.createWriteStream(data.path)
+			debug('data.path = %s', data.path)
 			pull(
 				stps.source(req),
 				pull.split(),
@@ -73,12 +74,31 @@ const server = http.createServer(function(req, res) {
 					data.movies.reset()
 					movies.forEach(function(movie) {
 						movie.id = data.movies.length
+						// console.log('adding %s', movie.name)
 						data.movies.push(movie)
-						handle.write(movie.name + '\n')
+						// handle.write(movie.name + '\n')
+					})
+					fs.open(data.path, 'w', function(err, fd) {
+						if(err) {
+							throw err
+						} else {
+							const buffer = new Buffer(movies.map(function(movie) {
+								return movie.name
+							}).join('\n'))
+							fs.write(fd, buffer, 0, buffer.length, 0, function(err) {
+								if(err)
+									throw err
+								else
+									fs.close(fd, function(err) {
+										if(err)
+											throw err
+									})
+							})
+						}
 					})
 					data.movies.emit('loaded')
 					data.emit('loaded')
-					handle.close()
+					// handle.close()
 					res.end()
 				})
 			)
