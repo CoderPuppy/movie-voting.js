@@ -1,5 +1,6 @@
 const debug = require('../debug').sub('voting', 'condorcets')
 const EE    = require('events').EventEmitter
+const util  = require('util')
 
 const ndarray = require('ndarray')
 ndarray.zeros = require('zeros')
@@ -7,7 +8,7 @@ ndarray.show  = require('ndarray-show')
 ndarray.ops   = require('ndarray-ops')
 
 function baseMatrix(movies) {
-	const matrix = ndarray.zeros([ movies.length, movies.length ])
+	const matrix = ndarray(new Int8Array(movies.length * movies.length), [ movies.length, movies.length ])
 	for(var x = 0; x < matrix.shape[0]; x++) {
 		for(var y = 0; y < matrix.shape[1]; y++) {
 			matrix.set(x, y, 0)
@@ -44,7 +45,12 @@ module.exports = function(data) {
 				var content = num ? '<' : ' '
 				if(numbers && num)
 					content = num + ''
-				res += content + new Array(Math.max(titles[x].length + 1 - content.length, 0)).join(' ') + ' '
+				console.log(x, content)
+				console.log(titles[x])
+				if(titles[x])
+					res += content + new Array(Math.max(titles[x].length + 1 - content.length, 0)).join(' ') + ' '
+				else
+					res += 'titles[' + x + '] = ' + util.inspect(titles[x]) + ' '
 			}
 			res = res.slice(0, res.length - 1)
 		}
