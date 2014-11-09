@@ -45,12 +45,13 @@ module.exports = function(data) {
 				var content = num ? '<' : ' '
 				if(numbers && num)
 					content = num + ''
-				console.log(x, content)
-				console.log(titles[x])
-				if(titles[x])
+				if(titles[x]) {
 					res += content + new Array(Math.max(titles[x].length + 1 - content.length, 0)).join(' ') + ' '
-				else
+				} else {
+					debug(x, content)
+					debug(titles[x])
 					res += 'titles[' + x + '] = ' + util.inspect(titles[x]) + ' '
+				}
 			}
 			res = res.slice(0, res.length - 1)
 		}
