@@ -1,6 +1,8 @@
-const debug = require('../debug').sub('voting', 'condorcets')
 const EE    = require('events').EventEmitter
 const util  = require('util')
+
+const debug = require('../debug').sub('voting', 'condorcets')
+debug.titles = debug.sub('titles')
 
 const ndarray = require('ndarray')
 ndarray.zeros = require('zeros')
@@ -20,9 +22,10 @@ function baseMatrix(movies) {
 module.exports = function(data) {
 	const voting = new EE
 
-	var titles
+	var titles = []
 
 	function updateTitles() {
+		debug.titles('prev titles', titles.join(', '))
 		titles = data.movies.map(function(movie) {
 			return movie.name.replace(/a|an|and|the|\s+/gi, '').replace(/[^A-Z:]/g, '')
 		})
@@ -30,6 +33,7 @@ module.exports = function(data) {
 		titles.maxLength = Math.max.apply(Math, [0].concat(titles.map(function(title) {
 			return title.length
 		})))
+		debug.titles('next titles', titles.join(', '))
 	}
 	updateTitles()
 
@@ -39,19 +43,22 @@ module.exports = function(data) {
 
 		var res = new Array(titles.maxLength + 2).join(' ') + titles.join(' ')
 		for(var y = 0; y < matrix.shape[1]; y++) {
+			if(typeof(titles[y]) != 'string') {
+				debug.titles("stuff broke (y)", y, titles, content)
+				debug.titles("huh", titles[y])
+			}
 			res += '\n' + titles[y] + new Array(titles.maxLength - titles[y].length + 2).join(' ')
 			for(var x = 0; x < matrix.shape[0]; x++) {
 				var num = matrix.get(x, y)
 				var content = num ? '<' : ' '
 				if(numbers && num)
 					content = num + ''
-				if(titles[x]) {
-					res += content + new Array(Math.max(titles[x].length + 1 - content.length, 0)).join(' ') + ' '
-				} else {
-					debug(x, content)
-					debug(titles[x])
+				if(typeof(titles[x]) != 'string') {
+					debug.titles("stuff broke (x)", x, titles, content)
+					debug.titles("huh", titles[x])
 					res += 'titles[' + x + '] = ' + util.inspect(titles[x]) + ' '
 				}
+				res += content + new Array(Math.max(titles[x].length + 1 - content.length, 0)).join(' ') + ' '
 			}
 			res = res.slice(0, res.length - 1)
 		}
