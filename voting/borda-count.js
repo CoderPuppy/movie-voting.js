@@ -39,6 +39,11 @@ module.exports = function(data) {
 		voting.emit('update')
 	}
 
+	voting.updateTitles = function() { return function(cb) {
+		if(!cb) cb = function(err) { if(err) throw err }
+		process.nextTick(function() { cb(null) })
+	} }
+
 	voting.update = function(person) { return function(cb) {
 		if(!cb) cb = function(err) { if(err) throw err }
 		

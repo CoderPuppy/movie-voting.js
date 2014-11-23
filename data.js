@@ -165,6 +165,11 @@ data.movies = (function() {
 
 data.voting = voting(data)
 
+data.loaded = function() {
+	voting.updateTitles()()
+	data.emit('loaded')
+}
+
 function par(thunks) {
 	const results = []
 	const cbs = []
@@ -208,7 +213,7 @@ data.load = function() { return function(cb) {
 			data.emit('error', err)
 		} else {
 			debug('loaded')
-			data.emit('loaded')
+			data.loaded()
 		}
 		cb(err)
 	})

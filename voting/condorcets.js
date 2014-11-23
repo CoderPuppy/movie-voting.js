@@ -96,8 +96,6 @@ module.exports = function(data) {
 	}
 
 	function update() {
-		updateTitles()
-
 		voting.matrix = baseMatrix(data.movies)
 		voting.people.forEach(function(matrix) {
 			ndarray.ops.add(voting.matrix, voting.matrix, matrix)
@@ -174,6 +172,17 @@ module.exports = function(data) {
 
 		voting.emit('update')
 	}
+	
+	voting.updateTitles = function() { return function(cb) {
+		if(!cb) cb = function(err) { if(err) throw err }
+
+		updateTitles()
+		data.people.forEach(function(person, i) {
+			voting.people[i] = generateMatrix(person)
+		})
+		update()
+		process.nextTick(function() { cb(null) })
+	} }
 
 	voting.update = function(person) { return function(cb) {
 		if(!cb) cb = function(err) { if(err) throw err }

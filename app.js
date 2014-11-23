@@ -96,8 +96,7 @@ const server = http.createServer(function(req, res) {
 							})
 						}
 					})
-					data.movies.emit('loaded')
-					data.emit('loaded')
+					data.loaded()
 					// handle.close()
 					res.end()
 				})
