@@ -166,7 +166,7 @@ data.movies = (function() {
 data.voting = voting(data)
 
 data.loaded = function() {
-	voting.updateTitles()()
+	data.voting.updateTitles()()
 	data.emit('loaded')
 }
 
