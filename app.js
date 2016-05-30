@@ -67,6 +67,7 @@ const server = http.createServer(function(req, res) {
 					sent += v
 				}, function() {
 					data.people.forEach(function(person) {
+						if(!person) return
 						person.update([])
 					})
 					data.voting.reset()

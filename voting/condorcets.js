@@ -27,7 +27,9 @@ module.exports = function(data) {
 	function updateTitles() {
 		debug.titles('prev titles', titles.join(', '))
 		titles = data.movies.map(function(movie) {
-			return movie.name.replace(/a|an|and|the|\s+/gi, '').replace(/[^A-Z:]/g, '')
+			return movie.name.replace(/(\W+|^)a|an|and|the|\s+(\W+|$)/gi, function($1, $2) {
+				return $1 + $2
+			}).replace(/[^A-Z:]/g, '')
 		})
 
 		titles.maxLength = Math.max.apply(Math, [0].concat(titles.map(function(title) {
@@ -178,6 +180,7 @@ module.exports = function(data) {
 
 		updateTitles()
 		data.people.forEach(function(person, i) {
+			if(!person) return
 			voting.people[i] = generateMatrix(person)
 		})
 		update()
