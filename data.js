@@ -229,15 +229,11 @@ data.load()(function(err) {
 	else {
 		data.save()
 
-		// data.people.new('John Doe')
-		// data.people.new('Jane Doe')
-		// data.people.new('Fiz Buz' )
-
-		data.people.new('Jeremy')//.update([ 10, 9, 7, 8, 2 ])
-		data.people.new('Becky' )//.update([ 4, 3, 2, 0, 1, 5 ])
-		data.people.new('Drew'  )//.update([ 4, 6, 3, 1, 9 ])
-		data.people.new('Dad'   )//.update([ 10, 7, 4, 5, 9, 2, 0, 3, 8, 1, 6 ])
-		data.people.new('Mom'   )
+		data.people.new('MIA Jar-emiah Binks')
+		data.people.new('Becka Fish'         )
+		data.people.new('The Drewduo x64'    )
+		data.people.new('Papapaya'           )
+		data.people.new('MIPS Dead Egyptian' )
 	}
 })
 
