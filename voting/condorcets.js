@@ -4,18 +4,35 @@ const util  = require('util')
 const debug = require('../debug').sub('voting', 'condorcets')
 debug.titles = debug.sub('titles')
 
-const ndarray = require('ndarray')
-ndarray.zeros = require('zeros')
-ndarray.show  = require('ndarray-show')
-ndarray.ops   = require('ndarray-ops')
-
-function baseMatrix(movies) {
-	const matrix = ndarray(new Int8Array(movies.length * movies.length), [ movies.length, movies.length ])
-	for(var x = 0; x < matrix.shape[0]; x++) {
-		for(var y = 0; y < matrix.shape[1]; y++) {
-			matrix.set(x, y, 0)
+function Matrix(w, h) {
+	if(!(this instanceof Matrix)) throw new Error("use new")
+	this.length = w * h
+	this.width = w
+	this.height = h
+	this.array = new Array(this.length)
+}
+Matrix.prototype.get = function(x, y) {
+	return this.array[x + y * this.width]
+}
+Matrix.prototype.set = function(x, y, v) {
+	this.array[x + y * this.width] = v
+}
+Matrix.prototype.fill = function(v) {
+	for(var i = 0; i < this.length; i++) this.array[i] = 0
+}
+Matrix.prototype.add = function(m) {
+	var width = Math.min(this.width, m.width)
+	var height = Math.min(this.height, m.height)
+	for(var x = 0; x < this.width; x++) {
+		for(var y = 0; y < this.height; y++) {
+			this.array[x + y * this.width] += m.array[x + y * m.width]
 		}
 	}
+}
+
+function baseMatrix(movies) {
+	const matrix = new Matrix(movies.length, movies.length)
+	matrix.fill(0)
 	return matrix
 }
 
@@ -44,13 +61,13 @@ module.exports = function(data) {
 			return ''
 
 		var res = new Array(titles.maxLength + 2).join(' ') + titles.join(' ')
-		for(var y = 0; y < matrix.shape[1]; y++) {
+		for(var y = 0; y < matrix.height; y++) {
 			if(typeof(titles[y]) != 'string') {
 				debug.titles("stuff broke (y)", y, titles, content)
 				debug.titles("huh", titles[y])
 			}
 			res += '\n' + titles[y] + new Array(titles.maxLength - titles[y].length + 2).join(' ')
-			for(var x = 0; x < matrix.shape[0]; x++) {
+			for(var x = 0; x < matrix.width; x++) {
 				var num = matrix.get(x, y)
 				var content = num ? '<' : ' '
 				if(numbers && num)
@@ -81,8 +98,8 @@ module.exports = function(data) {
 
 		const matrix = baseMatrix(data.movies)
 		var val
-		for(var x = 0; x < matrix.shape[0]; x++) {
-			for(var y = 0; y < matrix.shape[1]; y++) {
+		for(var x = 0; x < matrix.width; x++) {
+			for(var y = 0; y < matrix.height; y++) {
 				if(moviesOrder[y] < moviesOrder[x]) {
 					val = 1
 				} else {
@@ -100,7 +117,7 @@ module.exports = function(data) {
 	function update() {
 		voting.matrix = baseMatrix(data.movies)
 		voting.people.forEach(function(matrix) {
-			ndarray.ops.add(voting.matrix, voting.matrix, matrix)
+			voting.matrix.add(matrix)
 		})
 
 		debug('matrix:')
@@ -113,8 +130,8 @@ module.exports = function(data) {
 			wins[id] = 0
 		})
 
-		for(var y = 0; y < voting.matrix.shape[1]; y++) {
-			for(var x = 0; x < voting.matrix.shape[0]; x++) {
+		for(var y = 0; y < voting.matrix.height; y++) {
+			for(var x = 0; x < voting.matrix.width; x++) {
 				if(x <= y) continue
 
 				var runner   = voting.matrix.get(x, y)
