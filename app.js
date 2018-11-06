@@ -117,6 +117,7 @@ const server = http.createServer(function(req, res) {
 listen(server, process.env.PORT || 3000, process.env.IP || '0.0.0.0')
 
 const shoe = require('shoe')(require('client-reloader')(function(conn) {
+	conn.on('error', function() {})
 	conn.pipe(MuxDemux(function(stream) {
 		const meta = stream.meta
 		const ps = {
