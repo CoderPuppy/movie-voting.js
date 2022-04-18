@@ -97,6 +97,8 @@
   position: relative;
   height: 20px;
   color: #999;
+  border-bottom: 0px none transparent;
+  padding-top: 5px;
   color: #6b6b6b;
   text-align: center;
   -webkit-user-select: none;
